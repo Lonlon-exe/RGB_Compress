@@ -14,14 +14,15 @@ The lossless algorithm works by analyzing all **unique colors** in an image.
 - Each pixel is stored as a binary index pointing to its color in the palette.
 - The number of unique colors determines the bit length:
   - Example:  
-    - 100 unique colors → 7 bits per pixel  
-    - 16,000,000 unique colors → 24 bits per pixel (max)
+    - 100 unique colors → 16 bits per pixel
+    - 1023 unique colors -> 16 bitsperpixe
+    - 16,777,215 unique RGB colors → 40 bits per pixel (max)
 
 The final binary data is encoded using **Base32Hex** ([RFC 4648](https://datatracker.ietf.org/doc/html/rfc4648))  
 and stored in a `.pict` file — a readable UTF-8 `.txt`-compatible format.
 
 > **Example:**  
-> `16,000,000` in Base32Hex = `1EGQ0` → stored as 4 bytes in UTF-8
+> `16,777,215` in Base32Hex = `FVVVV` → stored as 5 bytes in UTF-8
 
 ---
 
