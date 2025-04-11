@@ -16,3 +16,5 @@ Uses an algorithm, which takes pixels with similar RGB values and connects them 
 
 Example:
 [20,40,50] and [22,38,51] will be combined to [21,39,50]
+
+Also works with RGBA
