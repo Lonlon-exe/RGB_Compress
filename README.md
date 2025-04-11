@@ -1,20 +1,45 @@
-# RGB_Compress
+# 🎨 RGB_Compress
 
-### A new way to compress/decompress RGB images
+**A novel way to compress and decompress RGB (and RGBA) images.**
 
-## No Loss Version 
-Works by analyzing which colors are in an image. This creates a color spectrum. The length of the spectrum is given by a number that indicates the amount of colors (16,000,000 possible colors).
-After that, each color gets assigned a number in binary; the length of this number is determined by the number of colors (longest 24 bits if all 16,000,000 colors are in one image). At last the whole binary "number" will be converted to one Base32hex following RFC 4648 number and stored in a .pic file which can be interpreted as an ordanary .txt file.
+This project introduces a custom image compression format focused on color optimization and text-based storage. It supports both lossless and lossy modes, with easy Base32Hex output.
 
-16.000.000 in Base32Hex: 1GQG0 (with UTF-8 4 byte)
+---
 
-![grafik](https://github.com/user-attachments/assets/1204dd5c-9c70-4555-827a-8c66d3771111)
+## 🔒 No-Loss Version (Lossless)
 
+The lossless algorithm works by analyzing all **unique colors** in an image.
 
-## Alternate version
-Uses an algorithm, which takes pixels with similar RGB values and connects them (image quality may be lost).
+- A color palette (spectrum) is created.
+- Each pixel is stored as a binary index pointing to its color in the palette.
+- The number of unique colors determines the bit length:
+  - Example:  
+    - 100 unique colors → 7 bits per pixel  
+    - 16,000,000 unique colors → 24 bits per pixel (max)
 
-Example:
-[20,40,50] and [22,38,51] will be combined to [21,39,50]
+The final binary data is encoded using **Base32Hex** ([RFC 4648](https://datatracker.ietf.org/doc/html/rfc4648))  
+and stored in a `.pict` file — a readable UTF-8 `.txt`-compatible format.
 
-Also works with RGBA
+> **Example:**  
+> `16,000,000` in Base32Hex = `1EGQ0` → stored as 4 bytes in UTF-8
+
+---
+
+## 🎨 Alternate Version (Lossy)
+
+The lossy variant reduces file size by merging similar RGB values:
+
+- Pixels with nearly identical color values are averaged.
+- This lowers the number of unique colors, enabling higher compression.
+
+> **Example:**  
+> `[20, 40, 50]` and `[22, 38, 51]` → `[21, 39, 50]`
+
+This method also works with **RGBA** images.
+
+---
+
+## 📁 Output Format
+
+All compressed images are saved as `.pic` files.  
+These are Base32Hex-encoded and human-readable in text editors.
